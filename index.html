@@ -7,284 +7,127 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --gold: #e8b84b;
-    --gold-dim: #a07820;
-    --bg: #080a0f;
-    --surface: #0f1218;
-    --surface2: #161b24;
-    --text: #e8eaf0;
-    --text-dim: #7a8090;
-    --red: #e84b4b;
+    --gold: #e8b84b; --gold-dim: #a07820; --bg: #080a0f;
+    --surface: #0f1218; --surface2: #161b24;
+    --text: #e8eaf0; --text-dim: #7a8090; --red: #e84b4b;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Outfit',sans-serif; min-height:100vh; overflow-x:hidden; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Outfit', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* Noise overlay */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 1000; opacity: 0.4;
-  }
-
-  /* Header */
   header {
-    position: sticky; top: 0; z-index: 100;
-    background: linear-gradient(180deg, rgba(8,10,15,0.98) 0%, rgba(8,10,15,0.85) 100%);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(232,184,75,0.12);
-    padding: 0 40px;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 70px;
+    position:sticky; top:0; z-index:100;
+    background:linear-gradient(180deg,rgba(8,10,15,0.98),rgba(8,10,15,0.85));
+    backdrop-filter:blur(20px); border-bottom:1px solid rgba(232,184,75,0.12);
+    padding:0 40px; display:flex; align-items:center; justify-content:space-between; height:70px;
   }
-
-  .logo {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 2rem;
-    letter-spacing: 4px;
-    background: linear-gradient(135deg, var(--gold) 0%, #fff5d6 50%, var(--gold-dim) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    text-shadow: none;
-  }
-
-  .logo span { color: var(--red); -webkit-text-fill-color: var(--red); }
-
-  .header-right {
-    display: flex; align-items: center; gap: 20px;
-  }
-
-  .movie-count {
-    font-size: 0.75rem; font-weight: 500; letter-spacing: 2px;
-    color: var(--text-dim); text-transform: uppercase;
-  }
-
+  .logo { font-family:'Bebas Neue',cursive; font-size:2rem; letter-spacing:4px;
+    background:linear-gradient(135deg,var(--gold),#fff5d6,var(--gold-dim));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .logo span { -webkit-text-fill-color:var(--red); }
+  .header-right { display:flex; align-items:center; gap:20px; }
+  .movie-count { font-size:0.75rem; font-weight:500; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase; }
   .refresh-btn {
-    background: rgba(232,184,75,0.1);
-    border: 1px solid rgba(232,184,75,0.3);
-    color: var(--gold);
-    padding: 8px 18px; border-radius: 4px;
-    font-family: 'Outfit', sans-serif; font-size: 0.8rem;
-    font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
-    cursor: pointer; transition: all 0.2s;
+    background:rgba(232,184,75,0.1); border:1px solid rgba(232,184,75,0.3);
+    color:var(--gold); padding:8px 18px; border-radius:4px;
+    font-family:'Outfit',sans-serif; font-size:0.8rem; font-weight:500;
+    letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:all 0.2s;
   }
-  .refresh-btn:hover { background: rgba(232,184,75,0.2); border-color: var(--gold); }
+  .refresh-btn:hover { background:rgba(232,184,75,0.2); border-color:var(--gold); }
 
-  /* Search */
-  .search-bar {
-    padding: 30px 40px 10px;
-    display: flex; gap: 16px; align-items: center;
-  }
-
+  .search-bar { padding:30px 40px 10px; }
   .search-input {
-    flex: 1; max-width: 400px;
-    background: var(--surface); border: 1px solid rgba(255,255,255,0.08);
-    color: var(--text); padding: 12px 20px; border-radius: 6px;
-    font-family: 'Outfit', sans-serif; font-size: 0.9rem;
-    transition: border-color 0.2s; outline: none;
+    width:100%; max-width:400px; background:var(--surface);
+    border:1px solid rgba(255,255,255,0.08); color:var(--text);
+    padding:12px 20px; border-radius:6px; font-family:'Outfit',sans-serif;
+    font-size:0.9rem; outline:none; transition:border-color 0.2s;
   }
-  .search-input:focus { border-color: rgba(232,184,75,0.4); }
-  .search-input::placeholder { color: var(--text-dim); }
+  .search-input:focus { border-color:rgba(232,184,75,0.4); }
+  .search-input::placeholder { color:var(--text-dim); }
 
-  /* Hero section */
-  .hero {
-    padding: 30px 40px 20px;
-    display: flex; gap: 16px; align-items: center;
-  }
-  .hero-line {
-    width: 40px; height: 2px;
-    background: linear-gradient(90deg, var(--gold), transparent);
-  }
-  .hero-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 1.1rem; letter-spacing: 4px; color: var(--text-dim);
-    text-transform: uppercase;
-  }
+  .hero { padding:30px 40px 20px; display:flex; gap:16px; align-items:center; }
+  .hero-line { width:40px; height:2px; background:linear-gradient(90deg,var(--gold),transparent); }
+  .hero-title { font-family:'Bebas Neue',cursive; font-size:1.1rem; letter-spacing:4px; color:var(--text-dim); }
 
-  /* Grid */
   .movies-grid {
-    padding: 10px 40px 60px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 24px;
+    padding:10px 40px 60px;
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:24px;
   }
 
-  /* Movie Card */
   .movie-card {
-    position: relative; cursor: pointer;
-    border-radius: 8px; overflow: hidden;
-    background: var(--surface);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    animation: cardIn 0.5s ease both;
+    position:relative; cursor:pointer; border-radius:8px; overflow:hidden;
+    background:var(--surface);
+    transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    animation:cardIn 0.5s ease both;
   }
-  .movie-card:hover { transform: scale(1.05) translateY(-4px); z-index: 10; }
-  .movie-card:hover .card-overlay { opacity: 1; }
-  .movie-card:hover .card-glow { opacity: 1; }
-
-  @keyframes cardIn {
-    from { opacity: 0; transform: translateY(20px) scale(0.95); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
+  .movie-card:hover { transform:scale(1.05) translateY(-4px); z-index:10; }
+  .movie-card:hover .card-overlay { opacity:1; }
+  .movie-card:hover .card-glow { opacity:1; }
+  @keyframes cardIn { from{opacity:0;transform:translateY(20px) scale(0.95)} to{opacity:1;transform:none} }
 
   .card-glow {
-    position: absolute; inset: -1px;
-    border-radius: 9px; z-index: -1;
-    background: linear-gradient(135deg, var(--gold), transparent 60%);
-    opacity: 0; transition: opacity 0.3s;
+    position:absolute; inset:-1px; border-radius:9px; z-index:-1;
+    background:linear-gradient(135deg,var(--gold),transparent 60%); opacity:0; transition:opacity 0.3s;
   }
-
-  .card-poster {
-    width: 100%; aspect-ratio: 2/3;
-    object-fit: cover; display: block;
-  }
-
+  .card-poster { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; }
   .card-no-poster {
-    width: 100%; aspect-ratio: 2/3;
-    background: linear-gradient(135deg, var(--surface2), #1a2030);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 12px;
+    width:100%; aspect-ratio:2/3;
+    background:linear-gradient(135deg,var(--surface2),#1a2030);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;
   }
-
-  .card-no-poster .film-icon {
-    font-size: 3rem; opacity: 0.3;
+  .film-icon { font-size:3rem; opacity:0.3; }
+  .no-poster-title {
+    font-family:'Bebas Neue',cursive; font-size:1rem; letter-spacing:2px;
+    color:var(--text-dim); text-align:center; padding:0 16px; line-height:1.3;
   }
-
-  .card-no-poster .no-poster-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 1rem; letter-spacing: 2px;
-    color: var(--text-dim); text-align: center;
-    padding: 0 16px; line-height: 1.3;
-  }
-
   .card-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(0deg, rgba(8,10,15,0.95) 0%, rgba(8,10,15,0.4) 50%, transparent 100%);
-    opacity: 0; transition: opacity 0.3s;
-    display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 20px 14px 14px;
+    position:absolute; inset:0;
+    background:linear-gradient(0deg,rgba(8,10,15,0.95) 0%,rgba(8,10,15,0.4) 50%,transparent 100%);
+    opacity:0; transition:opacity 0.3s;
+    display:flex; flex-direction:column; justify-content:flex-end; padding:20px 14px 14px;
   }
-
-  .card-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 1.1rem; letter-spacing: 2px;
-    color: white; line-height: 1.2; margin-bottom: 6px;
-  }
-
-  .card-meta {
-    font-size: 0.7rem; color: var(--text-dim);
-    letter-spacing: 1px; text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-
+  .card-title { font-family:'Bebas Neue',cursive; font-size:1.1rem; letter-spacing:2px; color:white; margin-bottom:6px; }
+  .card-meta { font-size:0.7rem; color:var(--text-dim); letter-spacing:1px; text-transform:uppercase; margin-bottom:12px; }
   .play-btn {
-    display: flex; align-items: center; gap: 8px;
-    background: var(--gold); color: #000;
-    border: none; padding: 8px 16px; border-radius: 4px;
-    font-family: 'Outfit', sans-serif; font-weight: 600;
-    font-size: 0.8rem; cursor: pointer; width: fit-content;
-    transition: background 0.2s; letter-spacing: 0.5px;
+    display:flex; align-items:center; gap:8px;
+    background:var(--gold); color:#000; border:none; padding:8px 16px; border-radius:4px;
+    font-family:'Outfit',sans-serif; font-weight:600; font-size:0.8rem;
+    cursor:pointer; width:fit-content; transition:background 0.2s;
   }
-  .play-btn:hover { background: #f5cc6a; }
+  .play-btn:hover { background:#f5cc6a; }
+  .card-bottom { padding:10px 12px; background:var(--surface); }
+  .card-bottom-title { font-size:0.82rem; font-weight:500; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .card-bottom-size { font-size:0.7rem; color:var(--text-dim); margin-top:2px; }
 
-  /* Bottom title (always visible) */
-  .card-bottom {
-    padding: 10px 12px;
-    background: var(--surface);
-  }
-  .card-bottom-title {
-    font-size: 0.82rem; font-weight: 500;
-    color: var(--text); white-space: nowrap;
-    overflow: hidden; text-overflow: ellipsis;
-  }
-  .card-bottom-size {
-    font-size: 0.7rem; color: var(--text-dim); margin-top: 2px;
-  }
+  .empty-state { padding:80px 40px; text-align:center; color:var(--text-dim); }
+  .empty-state h2 { font-family:'Bebas Neue',cursive; font-size:2rem; letter-spacing:4px; margin-bottom:12px; }
+  .loading { display:flex; align-items:center; justify-content:center; padding:80px; gap:12px; color:var(--text-dim); }
+  .spinner { width:24px; height:24px; border:2px solid rgba(232,184,75,0.2); border-top-color:var(--gold); border-radius:50%; animation:spin 0.8s linear infinite; }
+  @keyframes spin { to{transform:rotate(360deg)} }
 
-  /* Empty state */
-  .empty-state {
-    padding: 80px 40px;
-    text-align: center; color: var(--text-dim);
-  }
-  .empty-state h2 {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 2rem; letter-spacing: 4px;
-    color: var(--text-dim); margin-bottom: 12px;
-  }
-
-  /* Loading */
-  .loading {
-    display: flex; align-items: center; justify-content: center;
-    padding: 80px; gap: 12px; color: var(--text-dim);
-  }
-  .spinner {
-    width: 24px; height: 24px;
-    border: 2px solid rgba(232,184,75,0.2);
-    border-top-color: var(--gold);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* ─── VIDEO MODAL ─── */
   .modal-backdrop {
-    position: fixed; inset: 0; z-index: 500;
-    background: rgba(0,0,0,0.97);
-    display: flex; flex-direction: column;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.3s;
+    position:fixed; inset:0; z-index:500; background:rgba(0,0,0,0.97);
+    display:flex; flex-direction:column; opacity:0; pointer-events:none; transition:opacity 0.3s;
   }
-  .modal-backdrop.open { opacity: 1; pointer-events: all; }
-
-  .modal-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 20px 40px; flex-shrink: 0;
-    background: linear-gradient(180deg, rgba(8,10,15,1), transparent);
-  }
-
-  .modal-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 1.6rem; letter-spacing: 4px;
-    color: white;
-  }
-
+  .modal-backdrop.open { opacity:1; pointer-events:all; }
+  .modal-header { display:flex; align-items:center; justify-content:space-between; padding:20px 40px; flex-shrink:0; }
+  .modal-title { font-family:'Bebas Neue',cursive; font-size:1.6rem; letter-spacing:4px; }
   .close-btn {
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
-    color: white; width: 40px; height: 40px; border-radius: 50%;
-    font-size: 1.2rem; cursor: pointer; display: flex;
-    align-items: center; justify-content: center;
-    transition: background 0.2s;
+    background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15);
+    color:white; width:40px; height:40px; border-radius:50%; font-size:1.2rem;
+    cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s;
   }
-  .close-btn:hover { background: rgba(255,255,255,0.2); }
+  .close-btn:hover { background:rgba(255,255,255,0.2); }
+  .video-container { flex:1; display:flex; align-items:center; justify-content:center; padding:0 40px 40px; }
+  .video-container video { width:100%; max-height:100%; border-radius:8px; box-shadow:0 0 80px rgba(0,0,0,0.8); }
 
-  .video-container {
-    flex: 1; display: flex; align-items: center; justify-content: center;
-    padding: 0 40px 40px;
-  }
+  ::-webkit-scrollbar { width:6px; }
+  ::-webkit-scrollbar-track { background:var(--bg); }
+  ::-webkit-scrollbar-thumb { background:rgba(232,184,75,0.3); border-radius:3px; }
 
-  .video-container video {
-    width: 100%; max-height: 100%;
-    border-radius: 8px;
-    box-shadow: 0 0 80px rgba(0,0,0,0.8);
-  }
-
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: rgba(232,184,75,0.3); border-radius: 3px; }
-
-  /* Responsive */
-  @media (max-width: 600px) {
-    header { padding: 0 20px; }
-    .movies-grid { padding: 10px 20px 40px; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-    .search-bar { padding: 20px 20px 10px; }
-    .hero { padding: 20px 20px 10px; }
+  @media(max-width:600px) {
+    header { padding:0 20px; }
+    .movies-grid { padding:10px 20px 40px; grid-template-columns:repeat(2,1fr); gap:14px; }
+    .search-bar,.hero { padding-left:20px; padding-right:20px; }
   }
 </style>
 </head>
@@ -311,16 +154,13 @@
   <div class="loading"><div class="spinner"></div><span>Loading movies...</span></div>
 </div>
 
-<!-- Video Modal -->
 <div class="modal-backdrop" id="videoModal">
   <div class="modal-header">
     <span class="modal-title" id="modalTitle"></span>
     <button class="close-btn" onclick="closeModal()">✕</button>
   </div>
   <div class="video-container">
-    <video id="videoPlayer" controls autoplay>
-      Your browser does not support HTML5 video.
-    </video>
+    <video id="videoPlayer" controls autoplay></video>
   </div>
 </div>
 
@@ -330,114 +170,73 @@
   async function loadMovies() {
     document.getElementById('content').innerHTML = '<div class="loading"><div class="spinner"></div><span>Loading movies...</span></div>';
     try {
-      const res = await fetch('/api/movies');
-      allMovies = await res.json();
+      const res = await fetch('movies.php');
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      allMovies = data;
       renderMovies(allMovies);
       document.getElementById('movieCount').textContent = `${allMovies.length} Film${allMovies.length !== 1 ? 's' : ''}`;
     } catch (e) {
       document.getElementById('content').innerHTML = `
         <div class="empty-state">
-          <h2>⚠ Cannot Connect</h2>
-          <p>Make sure server.js is running.<br>Check console for details.</p>
+          <h2>⚠ Error</h2>
+          <p>${e.message || 'movies.php ගැටළුවක් ඇත. Console බලන්න.'}</p>
         </div>`;
     }
   }
 
   function filterMovies() {
     const q = document.getElementById('searchInput').value.toLowerCase();
-    const filtered = allMovies.filter(m => m.name.toLowerCase().includes(q));
-    renderMovies(filtered);
+    renderMovies(allMovies.filter(m => m.name.toLowerCase().includes(q)));
   }
 
   function renderMovies(movies) {
-    if (movies.length === 0) {
+    if (!movies.length) {
       document.getElementById('content').innerHTML = `
-        <div class="empty-state">
-          <h2>No Movies Found</h2>
-          <p>Add .mp4, .mkv, or other video files to the <strong>move</strong> folder.</p>
-        </div>`;
+        <div class="empty-state"><h2>No Movies Found</h2>
+        <p>move folder එකේ video files නැත.<br>movies.php හි path check කරන්න.</p></div>`;
       return;
     }
-
-    const html = movies.map((m, i) => `
-      <div class="movie-card" style="animation-delay:${i * 0.04}s" onclick="playMovie('${escAttr(m.file)}', '${escAttr(m.name)}')">
-        <div class="card-glow"></div>
-        ${m.thumbnail
-          ? `<img class="card-poster" src="/thumbnail/${encodeURIComponent(m.thumbnail)}" alt="${escAttr(m.name)}" loading="lazy">`
-          : `<div class="card-no-poster"><span class="film-icon">🎬</span><span class="no-poster-title">${esc(m.name)}</span></div>`
-        }
-        <div class="card-overlay">
-          <div class="card-title">${esc(m.name)}</div>
-          <div class="card-meta">${m.size}</div>
-          <button class="play-btn">▶ Play</button>
-        </div>
-        <div class="card-bottom">
-          <div class="card-bottom-title">${esc(m.name)}</div>
-          <div class="card-bottom-size">${m.size}</div>
-        </div>
-      </div>
-    `).join('');
-
-    document.getElementById('content').innerHTML = `<div class="movies-grid">${html}</div>`;
+    document.getElementById('content').innerHTML = `<div class="movies-grid">${
+      movies.map((m, i) => `
+        <div class="movie-card" style="animation-delay:${i*0.04}s" onclick="playMovie('${esc(m.file)}','${esc(m.name)}')">
+          <div class="card-glow"></div>
+          ${m.thumbnail
+            ? `<img class="card-poster" src="stream.php?type=thumbnail&file=${encodeURIComponent(m.thumbnail)}" alt="${esc(m.name)}" loading="lazy">`
+            : `<div class="card-no-poster"><span class="film-icon">🎬</span><span class="no-poster-title">${esc(m.name)}</span></div>`}
+          <div class="card-overlay">
+            <div class="card-title">${esc(m.name)}</div>
+            <div class="card-meta">${m.size}</div>
+            <button class="play-btn">▶ Play</button>
+          </div>
+          <div class="card-bottom">
+            <div class="card-bottom-title">${esc(m.name)}</div>
+            <div class="card-bottom-size">${m.size}</div>
+          </div>
+        </div>`).join('')
+    }</div>`;
   }
 
   function playMovie(file, name) {
-    const modal = document.getElementById('videoModal');
-    const player = document.getElementById('videoPlayer');
     document.getElementById('modalTitle').textContent = name;
-    player.src = '/video/' + encodeURIComponent(file);
-    modal.classList.add('open');
-    player.play();
+    document.getElementById('videoPlayer').src = 'stream.php?type=video&file=' + encodeURIComponent(file);
+    document.getElementById('videoModal').classList.add('open');
+    document.getElementById('videoPlayer').play();
   }
 
   function closeModal() {
-    const modal = document.getElementById('videoModal');
-    const player = document.getElementById('videoPlayer');
-    modal.classList.remove('open');
-    player.pause();
-    player.src = '';
+    document.getElementById('videoModal').classList.remove('open');
+    const p = document.getElementById('videoPlayer');
+    p.pause(); p.src = '';
   }
 
-  // Close with Escape key
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-  // Click outside video to close
-  document.getElementById('videoModal').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-  });
+  function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/'/g,'&#39;'); }
 
-  // Auto-refresh every 30 seconds
-  setInterval(async () => {
-    try {
-      const res = await fetch('/api/movies');
-      const fresh = await res.json();
-      if (fresh.length !== allMovies.length) {
-        allMovies = fresh;
-        filterMovies();
-        document.getElementById('movieCount').textContent = `${allMovies.length} Film${allMovies.length !== 1 ? 's' : ''}`;
-      }
-    } catch {}
-  }, 30000);
-
-  function esc(str) { return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-  function escAttr(str) { return str.replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+  document.getElementById('videoModal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+  setInterval(async()=>{ try{ const r=await fetch('movies.php'); const d=await r.json(); if(d.length!==allMovies.length){allMovies=d;filterMovies();document.getElementById('movieCount').textContent=`${d.length} Films`;} }catch{} }, 30000);
 
   loadMovies();
 </script>
 </body>
 </html>
-```
-
----
-
-## 🚀 Setup කරන ආකාරය
-
-**Folder structure:**
-```
-📁 ඔබේ folder (server.js & index.html save කරන folder)
-├── server.js
-├── index.html
-└── 📁 move/
-    ├── Avengers.mp4
-    ├── Avengers.jpg     ← thumbnail (same name!)
-    ├── Inception.mkv
-    └── Inception.png    ← thumbnail
